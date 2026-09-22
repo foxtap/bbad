@@ -28,7 +28,7 @@
 
 ### 用现成的 exe
 
-1. 到本仓库 **Releases** 页下载 `bbad-1.0.0-win64.zip`，解压到任意目录；
+1. 下载 [`bbad-1.0.0-win64.zip`](https://github.com/foxtap/bbad/releases/download/v1.0.0/bbad-1.0.0-win64.zip)（约 40 MB；[Releases 页](https://github.com/foxtap/bbad/releases/tag/v1.0.0)），解压到任意目录；
 2. 双击 **`bbad.exe`**；
 3. 在「连接」页填**域控 IP**（填 IP 就行，不必是域名）、账号写 `域\用户`、口令，点连接。
 
@@ -43,7 +43,7 @@
 ```bat
 python -m venv .venv
 .venv\Scripts\pip install -r requirements.txt
-run_dev.bat
+packaging\run_dev.bat
 ```
 
 源码直跑一个来回 1~2 秒，改界面时用这个；只想要功能就用上面的 exe。
@@ -132,6 +132,9 @@ run_dev.bat
 
 ## 源码结构
 
+30 个模块都在 `src/` 下（顶层平铺 import，`main.py` 会把自己所在目录加进 `sys.path`）；
+打包与启动脚本在 `packaging/`。
+
 | 文件 | 职责 |
 |---|---|
 | `ad_client.py` | **AD 访问的唯一主体**：连接、查询、写入、分页、二进制属性解码 |
@@ -142,7 +145,7 @@ run_dev.bat
 | `ui_*.py` | 界面层：只发指令、收结果，**不自己建 LDAP 连接** |
 | `config.py` `models.py` `utils.py` `audit.py` `diag.py` | 配置（原子写 + DPAPI）· 数据模型 · 工具 · 审计 · 诊断包 |
 | `mock_client.py` | 演示模式的数据来源，与真实客户端**接口一致**，可直接替换 |
-| `bbad.spec` `build.bat` `run_dev.bat` | 打包规格与两个启动脚本 |
+| `packaging/` | 打包规格与启动脚本（`bbad.spec` · `build.bat` · `run_dev.bat` · `run_dev_debug.bat`） |
 
 两条贯穿全程的约束：
 
@@ -154,16 +157,16 @@ run_dev.bat
 ## 自行打包
 
 ```bat
-build.bat            :: onedir（默认，启动 1 秒内）
-build.bat onefile    :: 单文件（发网盘方便，启动慢 3~6 秒）
+packaging\build.bat          :: onedir（默认，启动 1 秒内）
+packaging\build.bat onefile  :: 单文件（发网盘方便，启动慢 3~6 秒）
 ```
 
 产物：`dist\bbad\bbad.exe` / `dist\bbad.exe`
 
-`build.bat` 自带 5 道自检（虚拟环境 → 依赖能否导入 → PyInstaller → 语法 → **产物是否真的存在**）——
+`packaging\build.bat` 自带 5 道自检（虚拟环境 → 依赖能否导入 → PyInstaller → 语法 → **产物是否真的存在**）——
 PyInstaller 偶发「退出码 0 却没产物」，所以不许只看退出码。
 
-> 打包必须用 `bbad.spec` 而不是纯命令行：spec 里显式点名了 `win32timezone`、
+> 打包必须用 `packaging\bbad.spec` 而不是纯命令行：spec 里显式点名了 `win32timezone`、
 > `pythoncom`、`pywintypes`、`Crypto.Hash.MD4` 这几个**运行期懒加载**的模块 ——
 > 静态分析抓不到它们，漏了会在「改密」那一步才炸。
 

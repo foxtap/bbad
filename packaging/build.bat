@@ -3,7 +3,7 @@ rem ============================================================
 rem  build.bat  --  交付打包（给没装 Python 的机器用）
 rem
 rem  产物：dist\bbad\bbad.exe（onedir）/ dist\bbad.exe（onefile）
-rem  规格文件：bbad.spec
+rem  规格文件：packaging\bbad.spec
 rem
 rem  开发期请用 run_dev.bat（源码直跑，1~2 秒），不要用本脚本。
 rem
@@ -12,9 +12,9 @@ rem      build.bat            出 onedir（默认，推荐：启动快，整体拷文件夹）
 rem      build.bat onefile    出单文件（发邮件/网盘用，启动慢 3~6 秒）
 rem ============================================================
 setlocal
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
-set "PY=%~dp0.venv\Scripts\python.exe"
+set "PY=%~dp0..\.venv\Scripts\python.exe"
 
 rem ---------- 自检 1：虚拟环境 ----------
 if not exist "%PY%" (
@@ -54,12 +54,12 @@ if errorlevel 1 (
 )
 
 rem ---------- 自检 4：语法 ----------
-"%PY%" -m compileall -q main.py 2>nul
+"%PY%" -m compileall -q src\main.py 2>nul
 if errorlevel 1 (
     echo.
     echo [x] main.py 语法有错，先修再打包：
     echo.
-    "%PY%" -m compileall main.py
+    "%PY%" -m compileall src\main.py
     echo.
     pause
     exit /b 1
@@ -75,7 +75,7 @@ if /i "%~1"=="onefile" (
 )
 
 echo [i] 首次 30~60 秒；之后只重编译改动过的文件（所以别加 --clean）
-"%PY%" -m PyInstaller --noconfirm --distpath dist --workpath build "bbad.spec"
+"%PY%" -m PyInstaller --noconfirm --distpath dist --workpath build "packaging\bbad.spec"
 if errorlevel 1 (
     echo.
     echo [x] 打包失败，看上面 PyInstaller 的输出

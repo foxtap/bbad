@@ -12,10 +12,10 @@
 
 用法::
 
-    .venv\\Scripts\\pyinstaller --noconfirm bbad.spec      # 出 onedir
-    set ADPKG_ONEFILE=1 && .venv\\Scripts\\pyinstaller --noconfirm bbad.spec
+    .venv\\Scripts\\pyinstaller --noconfirm packaging/bbad.spec      # 出 onedir
+    set ADPKG_ONEFILE=1 && .venv\\Scripts\\pyinstaller --noconfirm packaging/bbad.spec
 
-或直接双击 `build.bat`（带依赖自检 + 产物自检）。
+或直接双击 `packaging/build.bat`（带依赖自检 + 产物自检）。
 """
 
 import os
@@ -60,9 +60,14 @@ hiddenimports = [
     "Crypto.Hash.MD4",
 ]
 
+# 源码都在 `src/` 下，入口与 pathex 都指向它。
+# `SPECPATH` = 本 spec 所在目录（`packaging/`）⇒ 上跳一级是仓库根。
+_ROOT = os.path.dirname(SPECPATH)
+_SRC = os.path.join(_ROOT, "src")
+
 a = Analysis(
-    ["main.py"],
-    pathex=[SPECPATH],                  # 本项目所有模块都是顶层平铺 import
+    [os.path.join(_SRC, "main.py")],
+    pathex=[_SRC],                      # 本项目所有模块都是顶层平铺 import
     binaries=[],
     datas=[],
     hiddenimports=hiddenimports,
