@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────
+#  .gitattributes —— 行尾与二进制标记
+#
+#  为什么需要这个文件：Windows 上 git 默认 `core.autocrlf=true`，
+#  检出时会把 LF 换成 CRLF。本项目纪律是**源码纯 LF**（.py / .spec / .md），
+#  靠"每台机器的默认值"维持是靠不住的 ⇒ 在这里把规矩写死。
+#
+#  ⚠️ 这条不是洁癖：`.py` 一旦在工作区变成 CRLF，本地跑回归时
+#     依赖行尾的判据会给出与别人不同的结果。
+# ─────────────────────────────────────────────────────────────
+
+# 默认：文本文件一律 LF（二进制由下面的 binary 行与 git 自动探测兜住）
+* text=auto eol=lf
+
+# Windows 批处理：cmd.exe 认 CRLF。
+# 注意：本项目的 .bat 是 **GBK 编码**（中文 echo 必须，见 skill `win-bat-gbk-encoding`）——
+# 这里只规范化**行尾**，绝不转码。
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制：一个字节都别动
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.exe  binary
+*.dll  binary
+*.pyd  binary
+*.pyz  binary
+*.zip  binary
+*.toc  binary

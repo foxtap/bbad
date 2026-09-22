@@ -1,0 +1,36 @@
+# AD 域管理工具 —— 运行时依赖
+# 详见 Obsidian: 08-开源选型与复用
+
+PyQt6>=6.6                   # UI 框架
+pyqtdarktheme-fork>=2.3      # 浅色/深色主题（MIT）—— 替代手写 QSS
+                             # ⚠️ 必须装 -fork 版！PyPI 上的 `pyqtdarktheme`
+                             #    是 Qt5 时代的老项目（0.1.7），没有
+                             #    `setup_theme`，装上会 ImportError。
+                             #    fork 版 import 名仍是 `qdarktheme`。
+ldap3>=2.9.1                 # LDAP：查询 / 解锁 / 启用禁用 / 建对象 / 分页 / unicodePwd
+pycryptodome>=3.20           # ⚠️ 硬依赖，不是可选优化 —— ldap3 的 NTLM 需要 MD4
+                             #    ldap3 先找 Crypto.Hash.MD4（本包提供），找不到就回落
+                             #    hashlib.new('MD4')；而 **Python 3.13 / OpenSSL 3 已把
+                             #    MD4 移出内置库**（legacy provider）→ 回落那步抛
+                             #    `ValueError: unsupported hash type MD4`。
+                             #    表现：「绑定失败：发生未预期的错误（ValueError）」，
+                             #    使用者完全无从下手；而**全部单元测试都用 fake ldap3，
+                             #    从不真算 NTLM，所以一条都不会红**。
+                             #    真域实测 2026-09-12（DC 192.0.2.10）：装上它之后
+                             #    同一段代码立刻走到正确的「用户名或密码错误」。
+pywin32>=306                 # LogonUser 身份模拟 + ADSI（RPC 通道改密）
+
+# 开发期 / 打包期
+# 交付打包（build.bat + bbad.spec）。只在"要出 exe"的机器上装，
+# 日常开发走 run_dev.bat 源码直跑，不依赖它。
+pyinstaller>=6.0             # ⚠️ 打包必须用 .spec 而不是纯命令行 —— spec 里显式点名了
+                             #    win32timezone / pythoncom / pywintypes / Crypto.Hash.MD4
+                             #    这些**运行期懒加载**的模块，漏了会在"改密"那一步才炸
+                             #    （静态分析抓不到懒加载）。详见 07-迭代与打包策略 §5。
+
+# 反证装置（仅开发机；产物不依赖）
+filelock>=3.13               # tools/_counterproof_util.py 的闸门。**不是可选优化** ——
+                             # 它换掉的是手写的字节范围锁（Windows 上连读都挡，
+                             # 实测锁文件里的记录永远读不出来）。
+                             # 缺它时装置会**大声**报 ImportError 并给出 pip 命令，
+                             # 不属于静默降级；写在这里是为了让"新机器跑装置"不靠猜。
