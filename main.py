@@ -122,7 +122,7 @@ def main() -> int:
     # 否则标题栏会读成「帮帮AD域管理工具 - AD 域管理工具」这种自相矛盾的两截。
     # 2026-09-22 实测（EnumWindows 读 OS 标题）：显示名 == 窗口标题 ⇒ 不追加，只显示一个。
     app.setApplicationDisplayName("帮帮AD域管理工具")
-    app.setOrganizationName("IT 运维自用")
+    app.setOrganizationName("foxtap")
 
     from audit import AuditLog, APP_VERSION
     from config import ConfigStore, logs_dir

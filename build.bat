@@ -6,7 +6,6 @@ rem  产物：dist\bbad\bbad.exe（onedir）/ dist\bbad.exe（onefile）
 rem  规格文件：bbad.spec
 rem
 rem  开发期请用 run_dev.bat（源码直跑，1~2 秒），不要用本脚本。
-rem  详见 Obsidian: 07-迭代与打包策略
 rem
 rem  用法：
 rem      build.bat            出 onedir（默认，推荐：启动快，整体拷文件夹）

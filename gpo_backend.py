@@ -14,7 +14,7 @@ Windows 自带 **GPMC 引擎**（`GPMgmt.GPM`，`gpmgmt.dll`）：RSAT 的「组
 ⇒ **本项目一行 `registry.pol` 都不解析**，全部交给它。
 
 > 🔴 **2026-09-17 更正**：上面这条**只在本模块内成立**（`gpo_backend` 至今
-> 仍是只读、仍不碰 `registry.pol`）。但主理人同日要求「**组策略要和 ADUC 一样
+> 仍是只读、仍不碰 `registry.pol`）。但同日的要求是「**组策略要和 ADUC 一样
 > 可以编辑**」＋「**内部嵌入的东西要下载到本地，不许本地没组件就用不了**」，
 > 而 GPMC/cmdlet 两条路**都要 RSAT** ⇒ 编辑能力改走**自包含**路线，
 > `registry.pol` 由本项目自己读写。**进度**：
@@ -22,8 +22,7 @@ Windows 自带 **GPMC 引擎**（`GPMgmt.GPM`，`gpmgmt.dll`）：RSAT 的「组
 > * ✅ `registry.pol` **读** ＋ 「改过哪些设置」的对照 ⇒ `preg_backend.py`
 >   ＋ `gpo_settings.py`（只读；判决装置 `tools/probe_gpo_settings.py`）；
 > * ⏳ **写**回（P1）**尚未开工** —— 它只在本项目的开关后面存在，
->   且**真机写操作只能主理人跑**。
-> 方案与代价/许可对账 ⇒ `.workbuddy/artifacts/方案-组策略可编辑-自包含-2026-09-17.md`。
+>   且**真机写操作只能在测试环境跑**。
 
 > 🔴 **2026-09-17（同日，第二处）**：「**列 GPO**」这条**生产路径已搬走** ——
 > 现在是 `gpo_ldap.py`（走 LDAP，**不需要 RSAT**）。理由同上一段：
@@ -66,7 +65,7 @@ Windows 自带 **GPMC 引擎**（`GPMgmt.GPM`，`gpmgmt.dll`）：RSAT 的「组
 | 换凭据 | `password_backend.impersonate()`（挂线程令牌） | `net use`（给网络位置带凭据，进程令牌不变） |
 | 为什么 | COM/RPC 用**线程令牌**，必须真挂令牌 | 实测 `NEW_CREDENTIALS` 不换本机身份，但给网络位置带凭据有效 |
 
-⚠️ 右列那条路连同它的后端 `share_backend.py` 已按主理人拍板
+⚠️ 右列那条路连同它的后端 `share_backend.py` 已按决定
 （「把操作共享盘这个功能全部删除掉」）一起销掉 —— **留在这里只是对照，
 不要照它去实现**。
 
@@ -516,8 +515,7 @@ def list_gpos(session: GpmSession) -> list[GpoInfo]:
     调用它的是判决装置（`tools/probe_gpo_settings.py --from-gpm` 等），
     **不是界面**。⚠️ 别把它当"备选路径"接回 `workers`：
     那会变成两份读实现，而且有 RSAT 和没 RSAT 的机器会拿到不同结果
-    （裁定见 `gpo_ldap.py` 模块说明与
-    `.workbuddy/artifacts/方案-组策略可编辑-自包含-2026-09-17.md` N1）。
+    （裁定见 `gpo_ldap.py` 模块说明）
 
     ⇒ 只返回 0 项是**合法结果**（域里可能真没有 GPO），**不是失败**。
     界面必须把"空"和"错"显示成两回事。

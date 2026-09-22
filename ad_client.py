@@ -884,7 +884,7 @@ class AdClient:
             dn=entry.get("dn") or normalize_attr(attrs.get("distinguishedName")),
         )
 
-    # 🔴 `get_user_attributes()` 已于 2026-09-18 删除（主理人拍板 · 拍板项 `G-06`）。
+    # 🔴 `get_user_attributes()` 已于 2026-09-18 删除（已定 · 拍板项 `G-06`）。
     #    三条理由（都现算过，不是印象）：
     #      * **生产零调用点** —— UI 读属性一律走 `read_attributes`
     #        （`ui_browser.py` 的「读取属性」/「读取模板属性」两处），
@@ -893,7 +893,6 @@ class AdClient:
     #        `{k: format_attr_value(k, v) for ...}` 推导，**不走 `_attrs_to_text`**
     #        ⇒ 与 `read_attributes` 构成「同一个对象显示成两个值」的分叉源。
     #      * 它的 docstring 说「供详情面板展示」，而**详情面板并不调它**。
-    #    ⚠️ 原文快照：`桌面/AD域管理工具-快照/pre-delete-get-user-attributes-20260918-1330/`。
     #    这个名字在本仓库里已经不存在了 —— 谁再看到它，那是过期的指路牌。
 
     # ==================================================================

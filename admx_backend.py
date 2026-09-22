@@ -85,7 +85,7 @@ BOM_UTF8 = b"\xef\xbb\xbf"
 DEFAULT_ADMX_DIR = os.path.join(
     os.environ.get("SystemRoot", r"C:\Windows"), "PolicyDefinitions")
 
-#: 界面语言的候选顺序。第一个是本项目的默认（主理人用简体中文）。
+#: 界面语言的候选顺序。第一个是本项目的默认（简体中文）。
 FALLBACK_LANGUAGES = ("zh-CN", "en-US")
 
 #: `elements` 的全部 6 种形态（实测穷举过，没有第 7 种）
@@ -805,11 +805,10 @@ def evaluate_policy(policy: AdmxPolicy,
 # 4. **ADMX 未声明取值时的惯例兜底**（只服务「读」这一侧）
 # ============================================================================
 #
-# 🔴 2026-09-18：主理人裁定「**这个工具不做组策略编辑**」⇒ 本节原来的主体
+# 🔴 2026-09-18：已定「**这个工具不做组策略编辑**」⇒ 本节原来的主体
 #    （**写回计划**：`PolicyValue` / `PolicyPatch` / `plan_policy_state` /
 #    `_decl_writes` / `_element_writes` / `_truthy`，以及展示映射 `state_word`）
-#    **已移出仓库归档**。原文快照：
-#    `桌面/AD域管理工具-快照/pre-archive-preg-admx-write-side-20260918-1230/admx_backend.py`
+#    **已移出仓库归档**（回滚件未进本仓库）。
 #    ⇒ ⚠️ **上面那几个名字现在在本仓库里再也查不到**，那不是笔误。
 #    本节只剩下面这条**读路径真的会走**的分支所需的两个常量与一个判据函数。
 

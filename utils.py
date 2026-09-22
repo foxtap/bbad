@@ -252,7 +252,6 @@ def escape_dn_value(value: Any) -> str:
     > **不造轮子说明**：ldap3 自带 ``ldap3.utils.dn.escape_rdn()``，
     > `ad_client.py` 里**直接用它**。本函数是无 ldap3 环境（离线/单测/Mock）下的
     > 兜底实现，算法与之等价，由 `tests/test_utils.py` 的对照用例保证一致。
-    > 详见 Obsidian: 08-开源选型与复用
 
     > **RDN 拼接惯例**：拼一个 RDN 一律**就地手写**
     > ``f"CN={escape_dn_value(name)},{parent_dn}"``（真域后端一样，只是把
@@ -588,7 +587,7 @@ def int_bytes_to_int(raw: Any) -> int:
     而本次日志里**没有** `batch_set_enabled` 的记录 ⇒ 它是否同样受影响 **未验证**。**别猜，去测。**
 
     ⚠️ `80` 是**整条 modify 被拒** ⇒ 按 LDAP 语义**不应留下部分写入**；
-    但这一条**未在真域复核**（AI 不碰生产域）⇒ 要下结论请自己查一次那个账号的 UAC。
+    但这一条**未在真域复核**（不碰生产域）⇒ 要下结论请自己查一次那个账号的 UAC。
 
     ⚠️ 判据顺序**必须先 ASCII 后 from_bytes**：ASCII 数字串一旦整体落进
     ``\\x30-\\x39`` 区间，两种解释都能成立（``b'01'`` = 文本 1 / 小端 12592）。

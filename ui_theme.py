@@ -4,7 +4,6 @@ ui_theme.py —— 主题层（T05）
 
 > **不造轮子**：浅/深色 QSS 全套交给 `pyqtdarktheme`，
 > 本文件只做三件事：① 包一层容错 ② 注入主色 ③ 记住用户选择。
-> 详见 Obsidian: 08-开源选型与复用
 
 关于包名：PyPI 上的 `pyqtdarktheme` 是**另一个老项目**（0.1.x，只支持 Qt5，
 API 是 `load_stylesheet`）。支持 Qt6 的是维护中的 fork

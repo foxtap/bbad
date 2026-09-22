@@ -1,5 +1,4 @@
 # AD 域管理工具 —— 运行时依赖
-# 详见 Obsidian: 08-开源选型与复用
 
 PyQt6>=6.6                   # UI 框架
 pyqtdarktheme-fork>=2.3      # 浅色/深色主题（MIT）—— 替代手写 QSS

@@ -356,7 +356,7 @@ class ConfigStore:
     def _assert_name_is_free(self, name: str, exclude_id: str | None = None) -> None:
         """名字已被**别的**记录占用 ⇒ 抛 `AdToolError`。
 
-        「配置名**不允许重名**」是 2026-09-18 主理人拍板的产品口径。理由是
+        「配置名**不允许重名**」是 2026-09-18 定的产品口径。理由是
         使用者拿名字认记录：连接页的列表只显示 `display_name()`（读的就是
         `name`），两条同名 ⇒ **界面上再也分不清哪条是哪条**。
 

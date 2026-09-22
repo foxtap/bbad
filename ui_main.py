@@ -66,9 +66,9 @@ class MainWindow(QMainWindow):
         #: 演示模式的人为延迟（让忙碌态看得见）。测试里会调成 0。
         self.demo_latency = 0.25
 
-        # 对外显示名 = 「帮帮AD域管理工具」（2026-09-22 主理人指定改名）。
+        # 对外显示名 = 「帮帮AD域管理工具」（2026-09-22 定名）。
         # 🔴 只改**显示名**。`config.APP_DIR_NAME` 那个 `AD域管理工具` 是**数据目录名**，
-        #    改了它 ⇒ 程序换个目录启动 ⇒ 主理人缓存的连接信息一条都看不见。
+        #    改了它 ⇒ 程序换个目录启动 ⇒ 已缓存的连接信息一条都看不见。
         #    两个名字管两件事，别一起改。
         self.setWindowTitle("帮帮AD域管理工具")
         self.resize(1240, 780)
@@ -108,8 +108,8 @@ class MainWindow(QMainWindow):
 
         tools_menu = self.menuBar().addMenu("工具(&T)")
 
-        # ⚠️ 2026-09-16：这里的「共享盘权限编辑器」入口**已整体删除**（主理人拍板
-        #    「把操作共享盘这个功能全部删除掉」，共享盘权限改由主理人**自己远程
+        # ⚠️ 2026-09-16：这里的「共享盘权限编辑器」入口**已整体删除**（已定
+        #    「把操作共享盘这个功能全部删除掉」，共享盘权限改由使用者**自己远程
         #    登录文件服务器**处理）。连同 `ui_share.py` / `share_editor.py` /
         #    `share_backend.py` 三个模块与本项一起销掉 ⇒ 本菜单**不含任何共享盘入口**。
         audit_action = QAction("操作日志(&L)", self)
@@ -117,7 +117,7 @@ class MainWindow(QMainWindow):
         audit_action.triggered.connect(self._show_audit)
         tools_menu.addAction(audit_action)
 
-        # 「强制复制同步」—— 2026-09-17 主理人裁定（方案 C）新增。
+        # 「强制复制同步」—— 2026-09-17 已定（方案 C）新增。
         #
         # 它服务的是那条**拓扑事实**：AD 是多主复制，写入点与读取点不是同一台时，
         # 新建/删除要等复制过去，才会在文件服务器的「选择用户或组」里搜得到
@@ -445,7 +445,7 @@ class MainWindow(QMainWindow):
         self._audit_window = None
 
     # ⚠️ 2026-09-16：`_show_share_editor()` / `_on_share_editor_closed()` 与
-    #    `ui_share.ShareEditorWindow` 一起**整体删除**（主理人拍板：操作共享盘这个
+    #    `ui_share.ShareEditorWindow` 一起**整体删除**（已定：操作共享盘这个
     #    功能全部不要了）。上面菜单里也没有恢复它的入口 —— 不要照着旧版加回来。
 
     def _open_app_dir(self) -> None:
