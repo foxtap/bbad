@@ -13,8 +13,8 @@
 * text=auto eol=lf
 
 # Windows 批处理：cmd.exe 认 CRLF。
-# 注意：本项目的 .bat 是 **GBK 编码**（中文 echo 必须，见 skill `win-bat-gbk-encoding`）——
-# 这里只规范化**行尾**，绝不转码。
+# 注意：本项目的 .bat 是 **GBK 编码**（中文 echo 必须：UTF-8 的 .bat 在 cmd.exe 下
+# 会把中文报成「不是内部或外部命令」）—— 这里只规范化**行尾**，绝不转码。
 *.bat text eol=crlf
 *.cmd text eol=crlf
 

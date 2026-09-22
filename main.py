@@ -134,7 +134,7 @@ def main() -> int:
 
     log = get_logger("main")
     log.info("=" * 60)
-    log.info("启动 AD 域管理工具 v%s（Python %s）", APP_VERSION,
+    log.info("启动 帮帮AD域管理工具 v%s（Python %s）", APP_VERSION,
              sys.version.split()[0])
     # 环境快照：这不是"好看"，是排障的第一眼 —— 用户报"连不上"时，
     # 先要能回答"在什么机器、什么形态、依赖是不是齐的"。
