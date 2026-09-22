@@ -519,7 +519,10 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout(dialog)
         browser = QTextBrowser()
-        browser.setOpenExternalLinks(False)
+        # 🔴 必须是 True。关于框里现在有一个外链（项目地址），而 `QTextBrowser`
+        #    默认会**在框内**跳转 —— 用户点一下，整个「关于」内容就被替换掉了
+        #    （看着像界面坏了）。True = 交给系统默认浏览器打开。
+        browser.setOpenExternalLinks(True)
         browser.setHtml(_ABOUT_HTML)
         layout.addWidget(browser)
         dialog.exec()
@@ -621,5 +624,7 @@ ADUC（dsa.msc）连接域控时会做 DNS 校验，在没有加入域的机器�
 <p><b>技术栈</b><br>
 Python · PyQt6 · ldap3 · pywin32</p>
 
-<p style="color:#888">配置与日志目录：%APPDATA%\\AD域管理工具</p>
+<p style="color:#888">配置与日志目录：%APPDATA%\\AD域管理工具<br>
+项目地址：<a href="https://github.com/foxtap/bbad">github.com/foxtap/bbad</a><br>
+许可：源码可见 · 禁止未授权商用（完整条款见仓库 <code>LICENSE</code>）</p>
 """
