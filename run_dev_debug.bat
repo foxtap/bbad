@@ -11,7 +11,7 @@ cd /d "%~dp0"
 set "PY=%~dp0.venv\Scripts\python.exe"
 if not exist "%PY%" set "PY=python"
 
-echo === 启动 AD 域管理工具（调试模式，关掉本窗口即退出）===
+echo === 启动 帮帮AD域管理工具（调试模式，关掉本窗口即退出）===
 echo.
 "%PY%" "%~dp0main.py"
 set "RC=%ERRORLEVEL%"
