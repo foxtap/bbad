@@ -46,3 +46,8 @@ Thumbs.db
 desktop.ini
 *~
 *.tmp
+
+# ⑤ 开发期用具 —— 与仓库同处一格，但**绝不进库**（2026-09-22 合并两棵树时加的）
+#    `.workbuddy/` 是项目记忆（含真实域控信息）；`docs/` 是内部需求与截图。
+.workbuddy/
+docs/
