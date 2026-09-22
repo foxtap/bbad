@@ -66,7 +66,11 @@ class MainWindow(QMainWindow):
         #: 演示模式的人为延迟（让忙碌态看得见）。测试里会调成 0。
         self.demo_latency = 0.25
 
-        self.setWindowTitle("AD 域管理工具")
+        # 对外显示名 = 「帮帮AD域管理工具」（2026-09-22 主理人指定改名）。
+        # 🔴 只改**显示名**。`config.APP_DIR_NAME` 那个 `AD域管理工具` 是**数据目录名**，
+        #    改了它 ⇒ 程序换个目录启动 ⇒ 主理人缓存的连接信息一条都看不见。
+        #    两个名字管两件事，别一起改。
+        self.setWindowTitle("帮帮AD域管理工具")
         self.resize(1240, 780)
         self.setMinimumSize(980, 620)
 
@@ -599,8 +603,8 @@ class MainWindow(QMainWindow):
 
 
 _ABOUT_HTML = """
-<h3>AD 域管理工具</h3>
-<p>一个自用的 Active Directory 轻量管理工具，用来替代 ADUC 的常用部分：
+<h3>帮帮AD域管理工具</h3>
+<p>一个 Active Directory 轻量管理工具，用来替代 ADUC 的常用部分：
 解锁、启用禁用、重置密码、新建用户 / OU / 组。</p>
 
 <p><b>为什么需要它</b><br>

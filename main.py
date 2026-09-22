@@ -117,7 +117,11 @@ def main() -> int:
 
     app = QApplication(sys.argv)
     app.setApplicationName("AD域管理工具")
-    app.setApplicationDisplayName("AD 域管理工具")
+    # 对外显示名 —— 它会被 Qt **追加**到窗口标题后面（`标题 - 显示名`），
+    # 所以：显示名与 `ui_main.MainWindow.setWindowTitle()` **必须一字不差**，
+    # 否则标题栏会读成「帮帮AD域管理工具 - AD 域管理工具」这种自相矛盾的两截。
+    # 2026-09-22 实测（EnumWindows 读 OS 标题）：显示名 == 窗口标题 ⇒ 不追加，只显示一个。
+    app.setApplicationDisplayName("帮帮AD域管理工具")
     app.setOrganizationName("IT 运维自用")
 
     from audit import AuditLog, APP_VERSION

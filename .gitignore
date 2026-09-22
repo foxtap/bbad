@@ -17,6 +17,8 @@
 build/
 dist/
 build_onefile/
+#    Release 附件（zip 本体走 GitHub Release，不进仓库）
+release/
 __pycache__/
 *.py[cod]
 *.spec.bak
